@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fff1f6">
+<title>For My Future Wife ♡</title>
+<style>
+:root{--pink:#f4a8c4;--rose:#a95478;--ink:#634354;--soft:#fff5f8;--line:#f1d5e0;--lav:#eee8ff}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;padding:22px 15px 50px;background:radial-gradient(circle at 12% 8%,#ffe1ec,transparent 30%),radial-gradient(circle at 90% 20%,#e9e3ff,transparent 27%),#fffaf9;color:var(--ink);font-family:ui-rounded,"Trebuchet MS",system-ui,sans-serif}
+main{max-width:690px;margin:auto}.hero{text-align:center;padding:25px 8px 20px}.hearts{font-size:23px;letter-spacing:9px;color:#d77e9f}.hero h1{font:500 clamp(37px,8vw,58px)/1.08 Georgia,serif;color:var(--rose);margin:12px 0}.hero p{color:#a47d91;margin:8px 0}
+.progress{height:7px;background:#f7e3eb;border-radius:20px;overflow:hidden;margin:0 0 20px}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#f2a5c1,#c6a8ed);transition:width .3s}
+.card{background:#ffffffed;border:1px solid var(--line);border-radius:25px;padding:clamp(20px,5vw,32px);box-shadow:0 18px 50px #8b58751a}
+.step{font-size:12px;letter-spacing:1.5px;font-weight:800;color:#bd7895}.question{font:500 clamp(25px,5vw,34px)/1.2 Georgia,serif;color:#814b68;margin:13px 0}.sub{color:#9c8190;font-size:14px;line-height:1.6}
+input[type=text]{width:100%;padding:15px;border:1px solid #e9cbd8;border-radius:14px;background:#fffdfd;font:inherit;color:var(--ink);outline:none;margin:8px 0 12px}input:focus{border-color:#dc8eae;box-shadow:0 0 0 3px #fae7ef}
+button{font:inherit;font-weight:750;border:0;border-radius:14px;padding:13px 19px;cursor:pointer;transition:.15s}button:hover{transform:translateY(-1px)}button:focus-visible{outline:3px solid #c58da8;outline-offset:3px}.go{background:linear-gradient(135deg,#f2a5c1,#d8b8f0);color:#633d54}.choice{background:#fff1f6;color:#98516f;border:1px solid #f0cfdd;text-align:left;padding:15px}.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}.choices .choice:last-child{grid-column:1/-1;text-align:center}
+.feedback{min-height:22px;font-size:13px;color:#b05e7d;margin-top:9px}.reveal{display:none;margin-top:22px;padding:19px;border-radius:18px;background:linear-gradient(135deg,#fff2f6,#f7f1ff);border:1px solid #f1d9e5;animation:pop .35s ease}.reveal.show{display:block}.reveal .label{font-size:11px;letter-spacing:1.4px;color:#ad6b88;font-weight:800}.reveal p{line-height:1.75;margin:10px 0 0;font-family:Georgia,serif;font-size:18px;color:#70475d}.next{display:none;margin-top:20px}.next.show{display:inline-block}.audio{display:none;margin-top:18px;padding:17px;background:#f4fbf6;border:1px solid #d8eee0;border-radius:17px}.audio.show{display:block}.audio h3{margin:0;color:#47775d}.audio audio{width:100%;margin:12px 0}.audio input{font-size:13px;max-width:100%}.tiny{font-size:12px;color:#9c8491;line-height:1.5}.finish{display:none;text-align:center}.finish.show{display:block}.finish .big{font-size:55px}.restart{margin-top:20px;background:#fff0f5;color:#98516f}
+@keyframes pop{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:450px){.choices{grid-template-columns:1fr}.choices .choice:last-child{grid-column:auto;text-align:left}.card{border-radius:21px}}
+</style>
+</head>
+<body>
+<main>
+<header class="hero"><div class="hearts">♡ ✧ ♡</div><h1>A Little Question<br>for You</h1><p>Four questions, just for my future wife. 💗</p></header>
+<div class="progress"><span id="bar"></span></div>
+<section class="card" id="quiz">
+  <div class="step" id="step">QUESTION 01 OF 04</div>
+  <h2 class="question" id="question"></h2>
+  <p class="sub" id="instruction"></p>
+  <div id="answerArea"></div>
+  <div class="feedback" id="feedback" aria-live="polite"></div>
+  <div class="reveal" id="reveal"><div class="label">♡ A LITTLE MESSAGE FOR YOU ♡</div><p id="message"></p></div>
+  <button class="go next" id="next">Continue ♡</button>
+  <div class="audio" id="audioBox">
+    <h3>One last thing… listen to me ♡</h3>
+    <p class="tiny">A little message, recorded just for you. Press play when you're ready. ♡</p>
+    <audio id="player" controls preload="metadata" src="voice_message.mp3"></audio>
+    <p class="tiny">♡ Always listen whenever you want.</p>
+  </div>
+</section>
+<section class="card finish" id="finish"><div class="big">💍🌷</div><h2 class="question">You said YES!</h2><p class="sub">I can't wait for all the beautiful little moments waiting for us. This is only the beginning. ♡</p><button class="restart" id="restart">Read it again</button></section>
+<p class="tiny" style="text-align:center;margin:20px">Made with love, just for you ♡</p>
+</main>
+<script>
+const steps=[
+ {q:"What is your future husband's full name?",hint:"Type his name below. You know who it is. 😉",kind:"text",placeholder:"Your future husband's name…",check:v=>v.toLowerCase().includes("jamil"),message:"Yes, that's right! I'm Jamil D. Into, your future husband. I promise to take care of you, stand beside you through every season, make you smile when days get difficult, and love you with all my heart. I want to build a beautiful life with you. I love you, today and forever. ♡"},
+ {q:"When did you two start talking?",hint:"Enter the date in DD/MM/YYYY format.",kind:"text",placeholder:"DD/MM/YYYY",check:v=>{let x=v.trim().toLowerCase();return ["17/09/2026","17-09-2026","2026-09-17","september 17, 2026","september 17 2026","17 september 2026"].includes(x)},message:"September 17, 2026 — a date that became special because it marks the beginning of our little story. I didn't know all the beautiful things that could grow from one conversation, but I'm so grateful we started talking. And if I had to choose again, I'd still choose that day… and you. ♡"},
+ {q:"How long will my love for you last?",hint:"One simple word is all you need.",kind:"text",placeholder:"Your answer…",check:v=>v.trim().toLowerCase()==="forever",message:"Forever. Not just when everything is easy, not just on the happiest days. I want to love you through the ordinary mornings, the silly moments, the hard days, and every new chapter. My love isn't counting down the days — it's choosing you, again and again. ♡"},
+ {q:"Will you marry me?",hint:"Choose your answer. Don't worry… every option is the right one. 🤭",kind:"choices",choices:["Yes! 💗","Definitely yes!","A thousand times YES!","Of course, silly! 💍","YES, MY FUTURE HUSBAND!"],message:"You said YES! I wish I could see your smile right now. I can't wait to hold your hand, make memories, laugh at our silly jokes, and call you my wife. Now, press play… I have something I want you to hear in my own voice. ♡"}
+];
+let current=0, completed=[false,false,false,false];
+const $=id=>document.getElementById(id);
+function render(){
+ const s=steps[current];$("step").textContent=`QUESTION 0${current+1} OF 04`;$("question").textContent=s.q;$("instruction").textContent=s.hint;$("feedback").textContent="";$("reveal").classList.remove("show");$("next").classList.remove("show");$("audioBox").classList.remove("show");$("bar").style.width=(current/4*100)+"%";
+ if(s.kind==="choices"){
+  $("answerArea").innerHTML='<div class="choices">'+s.choices.map((c,i)=>`<button class="choice" data-i="${i}">${c}</button>`).join("")+'</div>';
+  document.querySelectorAll(".choice").forEach(b=>b.addEventListener("click",()=>accept()));
+ }else{
+  $("answerArea").innerHTML=`<input id="answer" type="text" placeholder="${s.placeholder}" autocomplete="off"><button class="go" id="submit">Unlock my message ♡</button>`;
+  $("submit").addEventListener("click",verify);$("answer").addEventListener("keydown",e=>{if(e.key==="Enter")verify()});
+ }
+}
+function accept(){
+ completed[current]=true;$("feedback").textContent="That's the answer I was hoping for. ♡";$("reveal").classList.add("show");$("message").textContent=steps[current].message;$("next").classList.add("show");$("answerArea").innerHTML="";if(current===3){$("audioBox").classList.add("show");$("bar").style.width="100%"}
+}
+function verify(){const value=$("answer").value;if(steps[current].check(value)){accept()}else{$("feedback").textContent=current===0?"Hmm… your answer needs to include Jamil. Try again. ♡":current===1?"Check the date format: DD/MM/YYYY. Try again. ♡":"Not quite. Try again, sweetheart. ♡"}}
+$("next").addEventListener("click",()=>{if(current<3){current++;render()}else{$("quiz").style.display="none";$("finish").classList.add("show")}});
+$("restart").addEventListener("click",()=>{current=0;$("finish").classList.remove("show");$("quiz").style.display="block";render()});
+render();
+// Load the bundled voice recording from the same folder as this HTML file.
+$("player").load();
+</script>
+</body>
+</html>
